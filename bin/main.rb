@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 # !/usr/bin/env ruby
 puts 'Welcome To Tic Tac Toe Game'
 
@@ -30,8 +29,8 @@ player = {
 }
 
 symboleee = {
-  '1': 'x',
-  '2': 'O'
+  '1': nil,
+  '2': nil
 }
 
 symboleee[':1'] = 'x'
