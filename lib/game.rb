@@ -6,21 +6,26 @@ class Game
   def initialize
     @total_match = 0
     @players = []
-    @current_round = 0
     @board = Board.new
     @turn = 1
     display_header
   end
 
   def start
-    @current_round = 0
     @board.reset_board
-    while @current_round < 9
+    while @board.total_moves < 9
       @board.draw_board
       change_turn
+      valid = false
       choice = user_move
-      @board.mark_tile(choice, get_player(@turn).symbole)
-      update_round
+      until valid
+        begin
+          @board.mark_tile(choice, get_player(@turn).symbole)
+          valid = true
+        rescue CustomException => e
+          puts "#{e.message} \n Try again"
+        end
+      end
       next unless @board.won?(get_player(@turn).symbole)
 
       get_player(@turn).increase_win
@@ -50,16 +55,12 @@ class Game
     puts get_player(@turn).name + '\'s Turn'
   end
 
-  def update_round
-    @current_round += 1
-  end
-
   def get_player(index)
     @players[index - 1]
   end
 
   def validate_move(choice)
-    choice.match(/[1-9]/)
+    choice.match(/^[1-9]{1}$/)
   end
 
   def user_move
