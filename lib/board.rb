@@ -7,6 +7,7 @@ class Board
 
   def initialize
     reset_board
+    @total_moves = 0
   end
 
   def draw_board()
@@ -22,10 +23,13 @@ class Board
   end
 
   def mark_tile(index, symbole)
+    @total_moves += 1
     @tile[index - 1] = symbole
   end
 
   def won?(symbole)
+    return false if @total_moves < 4
+
     won = false
     WINING_COMBINATIONS.each do |combination|
       unless @tile[combination[0]] == symbole && @tile[combination[1]] == symbole && @tile[combination[2]] == symbole
@@ -39,6 +43,7 @@ class Board
   end
 
   def reset_board
+    @total_moves = 0
     @tile = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   end
 end

@@ -1,5 +1,6 @@
 require_relative './player.rb'
 require_relative './board.rb'
+require_relative './custom_exception.rb'
 class Game
   attr_reader :total_match
   def initialize
@@ -7,35 +8,26 @@ class Game
     @players = []
     @current_round = 0
     @board = Board.new
+    @turn = 1
     display_header
   end
 
   def start
-    add_players
-    continue = true
-    while continue
-      turn = 1
-      while round < 9
-        @board.draw_board
-        turn = turn == 2 ? 1 : 2
-        puts get_player(turn).name + '\'s Turn'
-        choice = user_move
-        @board.mark_tile(choice, get_player(turn).symbole)
-        update_round
+    @current_round = 0
+    @board.reset_board
+    while @current_round < 9
+      @board.draw_board
+      change_turn
+      choice = user_move
+      @board.mark_tile(choice, get_player(@turn).symbole)
+      update_round
+      next unless @board.won?(get_player(@turn).symbole)
 
-        next unless @board.won?(get_player(turn).symbole)
-
-        display_winner_message(turn)
-        break
-      end
-      puts 'Do you want to play another round (y/n)'
-      play = gets.chomp
-      continue = play.downcase != 'n'
-      @board.reset_board
+      get_player(@turn).increase_win
+      display_winner_message(@turn)
+      break
     end
   end
-
-  private
 
   def add_players
     print 'First player name: '
@@ -51,6 +43,13 @@ class Game
     @players << Player.new(second_player_name, second_player_symbole)
   end
 
+  private
+
+  def change_turn
+    @turn = @turn == 2 ? 1 : 2
+    puts get_player(@turn).name + '\'s Turn'
+  end
+
   def update_round
     @current_round += 1
   end
@@ -64,27 +63,36 @@ class Game
   end
 
   def user_move
-    choice = false
-    unless choice
-      choice = gets.chomp
-      choice = validate_move(choice) ? choice.to_i : false
-      puts 'invalid input \n valid input is a number between 1 and 9' unless choice
+    valid = false
+    choice = 0
+    until valid
+      begin
+        choice = gets.chomp
+        raise CustomException, 'Invalid Input, Valid Move should be digit between 1-9' unless validate_move(choice.to_s)
+
+        valid = true
+        choice = choice.to_i
+      rescue CustomException => e
+        puts "#{e.message}  \n Try Again"
+      rescue StandardError => e
+        puts "#{e.message}  \n Try Again"
+      end
     end
     choice
   end
 
   def display_header
-    <<~HEARDOC
-      ***************************************
+    puts <<~HEARDOC
+      \e[31m***************************************
       *                                     *
       *           TIC TAC TOE               *
       *                                     *
-      ***************************************
+      *************************************** \e[0m
     HEARDOC
   end
 
   def display_winner_message(winner)
-    <<-HEARDOC
+    puts <<-HEARDOC
     ************************************************************
     *                    Congradulation                        *
     *          #{get_player(winner).name}  has won             *

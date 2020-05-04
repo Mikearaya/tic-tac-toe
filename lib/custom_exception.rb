@@ -1,0 +1,2 @@
+class CustomException < StandardError
+end
