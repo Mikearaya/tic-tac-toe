@@ -1,7 +1,16 @@
 #!/usr/bin/env ruby
-require_relative '../lib/game.rb'
+require_relative '../lib/tic_tac_toe.rb'
 require_relative '../lib/validatable.rb'
-game = Game.new
+
+puts <<~HEARDOC
+  ***************************************
+  *                                     *
+  *           TIC TAC TOE               *
+  *                                     *
+  ***************************************
+HEARDOC
+
+game = TicTacToe.new
 
 game.add_players
 

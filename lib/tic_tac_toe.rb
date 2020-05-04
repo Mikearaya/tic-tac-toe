@@ -3,7 +3,7 @@ require_relative './board.rb'
 require_relative './custom_exception.rb'
 require_relative './validatable.rb'
 require 'colorize'
-class Game
+class TicTacToe
   attr_reader :total_match
   def initialize
     @total_match = 0
@@ -11,10 +11,10 @@ class Game
     @board = Board.new
     @turn = 1
     @used_symbole = {}
-    display_header
   end
 
   def play
+    @total_match += 1
     @board.reset_board
     while @board.total_moves < 10
       @board.draw_board
@@ -87,15 +87,14 @@ class Game
   end
 
   def user_move
-    valid = false
     choice = 0
-    until valid
+    loop do
       begin
         choice = gets.chomp
         raise CustomException, 'Invalid Input, Valid Move should be digit between 1-9' unless validate_move(choice.to_s)
 
-        valid = true
         choice = choice.to_i
+        break
       rescue CustomException => e
         puts "#{e.display_error}  \n Try Again"
       rescue StandardError => e
@@ -103,16 +102,6 @@ class Game
       end
     end
     choice
-  end
-
-  def display_header
-    puts <<~HEARDOC
-      ***************************************
-      *                                     *
-      *           TIC TAC TOE               *
-      *                                     *
-      ***************************************
-    HEARDOC
   end
 
   def display_winner_message(winner)
@@ -132,7 +121,9 @@ class Game
 
 
     ************************************************************
-                          GAME STATISTICS
+                        GAME STATISTICS
+
+                        Total Matches #{@total_match}
 
               #{@players[0].name}    #{@players[1].name}
       Wins    #{@players[0].wins}           #{@players[1].wins}
