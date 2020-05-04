@@ -1,6 +1,7 @@
 require_relative './player.rb'
 require_relative './board.rb'
 require_relative './custom_exception.rb'
+require_relative './validatable.rb'
 class Game
   attr_reader :total_match
   def initialize
@@ -8,20 +9,20 @@ class Game
     @players = []
     @board = Board.new
     @turn = 1
+    @used_symbole = {}
     display_header
   end
 
   def play
     @board.reset_board
-    while @board.total_moves < 9
+    while @board.total_moves < 10
       @board.draw_board
       change_turn
-      valid = false
-      until valid
+      loop do
         choice = user_move
         begin
           @board.mark_tile(choice, get_player(@turn).symbole)
-          valid = true
+          break
         rescue CustomException => e
           puts e.display_error
         end
@@ -38,17 +39,38 @@ class Game
     print 'First player name: '
     first_player_name = gets.chomp
     print ' Symbole: '
-    first_player_symbole = gets.chomp
-
-    @players << Player.new(first_player_name, first_player_symbole)
+    symbole = read_symbole
+    @players << Player.new(first_player_name, symbole)
     print 'Second player name: '
     second_player_name = gets.chomp
     print ' Symbole: '
-    second_player_symbole = gets.chomp
-    @players << Player.new(second_player_name, second_player_symbole)
+    symbole = read_symbole
+    @players << Player.new(second_player_name, symbole)
   end
 
   private
+
+  def read_symbole
+    symbole = ''
+    loop do
+      begin
+        symbole = gets.chomp
+
+        Validatable.valid_symbole?(symbole)
+        if @used_symbole[":#{symbole}"]
+          puts 'symbole already used, try different'
+          next
+        end
+        @used_symbole[":#{symbole}"] = true
+        break
+      rescue CustomException => e
+        puts e.display_error
+      rescue StandardError => e
+        puts e.message
+      end
+    end
+    symbole
+  end
 
   def change_turn
     @turn = @turn == 2 ? 1 : 2
@@ -96,7 +118,24 @@ class Game
     puts <<-HEARDOC
     ************************************************************
     *                    Congradulation                        *
-    *          #{get_player(winner).name}  has won             *
+                  #{get_player(winner).name}  has won
+    ************************************************************
+    HEARDOC
+    display_statstics
+  end
+
+  public
+
+  def display_statstics
+    puts <<-HEARDOC
+
+
+    ************************************************************
+                          GAME STATISTICS
+
+              #{@players[0].name}    #{@players[1].name}
+      Wins    #{@players[0].wins}           #{@players[1].wins}
+
     ************************************************************
     HEARDOC
   end
