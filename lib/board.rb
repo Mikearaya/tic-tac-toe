@@ -1,10 +1,11 @@
 class Board
+  WINING_COMBINATIONS = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ].freeze
+
   def initialize
-    @winning_combination = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6]
-    ]
     reset_board
   end
 
@@ -26,7 +27,7 @@ class Board
 
   def won?(symbole)
     won = false
-    @winning_combination.each do |combination|
+    WINING_COMBINATIONS.each do |combination|
       unless @tile[combination[0]] == symbole && @tile[combination[1]] == symbole && @tile[combination[2]] == symbole
         next
       end
@@ -34,6 +35,7 @@ class Board
       won = true
       break
     end
+    won
   end
 
   def reset_board

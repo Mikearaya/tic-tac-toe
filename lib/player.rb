@@ -4,8 +4,8 @@ class Player
   attr_reader :wins
 
   def initialize(name, symbole)
-    self.name = name
-    self.symbole = symbole
+    @name = name
+    @symbole = symbole
   end
 
   def increase_win

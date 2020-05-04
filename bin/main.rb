@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require_relative '../lib/board.rb'
+require_relative '../lib/game.rb'
 
-board = Board.new
+board = Game.new
 
-board.draw_board
+board.start
