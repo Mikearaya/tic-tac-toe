@@ -2,6 +2,7 @@ require_relative './player.rb'
 require_relative './board.rb'
 require_relative './custom_exception.rb'
 require_relative './validatable.rb'
+require 'colorize'
 class Game
   attr_reader :total_match
   def initialize
@@ -36,14 +37,14 @@ class Game
   end
 
   def add_players
-    print 'First player name: '
+    print 'First player name: '.blue
     first_player_name = gets.chomp
-    print ' Symbole: '
+    print ' Symbole: '.blue
     symbole = read_symbole
     @players << Player.new(first_player_name, symbole)
-    print 'Second player name: '
+    print 'Second player name: '.blue
     second_player_name = gets.chomp
-    print ' Symbole: '
+    print ' Symbole: '.blue
     symbole = read_symbole
     @players << Player.new(second_player_name, symbole)
   end
@@ -106,20 +107,20 @@ class Game
 
   def display_header
     puts <<~HEARDOC
-      \e[31m***************************************
+      ***************************************
       *                                     *
       *           TIC TAC TOE               *
       *                                     *
-      *************************************** \e[0m
+      ***************************************
     HEARDOC
   end
 
   def display_winner_message(winner)
     puts <<-HEARDOC
-    ************************************************************
-    *                    Congradulation                        *
-                  #{get_player(winner).name}  has won
-    ************************************************************
+        ************************************************************
+        *                    Congradulation                        *
+                      #{get_player(winner).name}  has won
+        ************************************************************
     HEARDOC
     display_statstics
   end
