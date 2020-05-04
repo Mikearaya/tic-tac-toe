@@ -6,6 +6,7 @@ class Player
   def initialize(name, symbole)
     @name = name
     @symbole = symbole
+    @wins = 0
   end
 
   def increase_win

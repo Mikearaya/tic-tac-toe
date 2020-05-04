@@ -24,6 +24,8 @@ class Board
 
   def mark_tile(index, symbole)
     @total_moves += 1
+    raise CustomException, 'Tile already marked pick another tile and try again' if @tile[index - 1].is_a?(String)
+
     @tile[index - 1] = symbole
   end
 

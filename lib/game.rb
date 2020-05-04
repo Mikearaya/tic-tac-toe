@@ -11,19 +11,19 @@ class Game
     display_header
   end
 
-  def start
+  def play
     @board.reset_board
     while @board.total_moves < 9
       @board.draw_board
       change_turn
       valid = false
-      choice = user_move
       until valid
+        choice = user_move
         begin
           @board.mark_tile(choice, get_player(@turn).symbole)
           valid = true
         rescue CustomException => e
-          puts "#{e.message} \n Try again"
+          puts e.display_error
         end
       end
       next unless @board.won?(get_player(@turn).symbole)
@@ -74,7 +74,7 @@ class Game
         valid = true
         choice = choice.to_i
       rescue CustomException => e
-        puts "#{e.message}  \n Try Again"
+        puts "#{e.display_error}  \n Try Again"
       rescue StandardError => e
         puts "#{e.message}  \n Try Again"
       end
