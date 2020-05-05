@@ -11,7 +11,7 @@ class Board
   end
 
   def draw_board()
-    puts <<-HEREDOC
+    <<-HEREDOC
 
       #{@tile[0]} | #{@tile[1]} | #{@tile[2]}
       -   -   -
@@ -30,7 +30,7 @@ class Board
   end
 
   def won?(symbol)
-    return false if @total_moves < 4
+    return false if @total_moves < 5
 
     won = false
     WINING_COMBINATIONS.each do |combination|

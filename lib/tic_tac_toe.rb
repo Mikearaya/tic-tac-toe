@@ -11,12 +11,17 @@ class TicTacToe
     @board = Board.new
     @turn = 1
     @used_symbol = {}
-    @total_move = 0
+    @draw = false
   end
 
   def play
     @total_match += 1
+    @draw = false
     @board.reset_board
+  end
+
+  def draw?
+    @draw
   end
 
   def display_board
@@ -27,17 +32,17 @@ class TicTacToe
     raise CustomException, 'Can not add more that 2 players' if @players.size > 1
     raise CustomException, 'Symbol already used try using another symbol' unless symbol_available?(symbol)
 
-    @used_symbol[":#{symbol}"] = true
     @players << Player.new(player_name, symbol)
+    @used_symbol[":#{symbol}"] = true
   end
 
   def change_turn
     @turn = @turn == 2 ? 1 : 2
-    puts get_player(@turn).name + '\'s Turn'
+    get_player(@turn).name + '\'s Turn'
   end
 
   def ended?()
-    @total_move > 9
+    @draw = @board.total_moves > 8
   end
 
   def make_move(tile)
@@ -45,7 +50,6 @@ class TicTacToe
 
     tile = tile.to_i
     @board.mark_tile(tile, get_player(@turn).symbol)
-    @total_move += 1
   end
 
   def player_won?
@@ -61,14 +65,14 @@ class TicTacToe
 
     ************************************************************
     *                    Congradulation                        *
-                  #{get_player(@turn).name}  has won
-    ************************************************************
+                      #{get_player(@turn).name}  has won
+
     HEARDOC
     display_statstics
   end
 
   def display_statstics
-    puts <<-HEARDOC
+    <<-HEARDOC
 
 
     ************************************************************
@@ -79,7 +83,6 @@ class TicTacToe
               #{@players[0].name}    #{@players[1].name}
       Wins    #{@players[0].wins}           #{@players[1].wins}
 
-    ************************************************************
     HEARDOC
   end
 

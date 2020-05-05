@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require_relative '../lib/tic_tac_toe.rb'
 require_relative '../lib/validatable.rb'
+require 'colorize'
 
 puts <<~HEARDOC
   ***************************************
@@ -44,8 +45,8 @@ continue = true
 while continue
   game.play
   until game.ended?
-    game.display_board
-    game.change_turn
+    puts game.display_board
+    puts game.change_turn.yellow
 
     loop do
       begin
@@ -53,17 +54,25 @@ while continue
         game.make_move(choice)
         break
       rescue CustomException => e
-        e.display_error
+        puts e.display_error
       end
     end
-    puts 'get'
     next unless game.player_won?
 
-    game.display_winner_message
+    puts game.display_board.green
+    puts game.display_winner_message.green
     break
   end
 
-  puts 'Game Over \n Do you want to play another round (y/n)'
+  if game.draw?
+    puts <<-HEARDOC
+    ******************************************************
+    *            IT SEEMS TO BE A DRAW :-)               *
+    ******************************************************
+    HEARDOC
+  end
+
+  puts "Game Over \n Do you want to play another round (y/n)".yellow
 
   loop do
     begin
