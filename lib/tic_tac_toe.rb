@@ -64,7 +64,7 @@ class TicTacToe
     puts <<-HEARDOC
 
     ************************************************************
-    *                    Congradulation                        *
+    *                    Congratulations                        *
                       #{get_player(@turn).name}  has won
 
     HEARDOC

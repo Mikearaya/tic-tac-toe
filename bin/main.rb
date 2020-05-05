@@ -3,6 +3,11 @@ require_relative '../lib/tic_tac_toe.rb'
 require_relative '../lib/validatable.rb'
 require 'colorize'
 
+def clear_screen
+  Gem.win_platform? ? (system 'cls') : (system 'clear')
+end
+clear_screen
+
 puts <<~HEARDOC
   ***************************************
   *                                     *
@@ -16,9 +21,9 @@ player_name = ''
 player_symbol = ''
 loop do
   begin
-    print 'First player name: '.white
+    print 'First player name: '.yellow.bold
     player_name = gets.chomp
-    print ' Symbol: '.white
+    print ' Symbol: '.yellow.bold
     player_symbol = gets.chomp
 
     game.add_players(player_name, player_symbol)
@@ -29,9 +34,9 @@ loop do
 end
 loop do
   begin
-    print 'Second player name: '
+    print 'Second player name: '.yellow.bold
     player_name = gets.chomp
-    print ' Symbol: '
+    print ' Symbol: '.yellow.bold
     player_symbol = gets.chomp
 
     game.add_players(player_name, player_symbol)
@@ -43,10 +48,11 @@ end
 
 continue = true
 while continue
+  clear_screen
   game.play
   until game.ended?
     puts game.display_board
-    puts game.change_turn.yellow
+    puts game.change_turn.yellow.bold
 
     loop do
       begin
@@ -60,7 +66,7 @@ while continue
     next unless game.player_won?
 
     puts game.display_board.green
-    puts game.display_winner_message.green
+    puts game.display_winner_message.green.bold
     break
   end
 
@@ -72,7 +78,7 @@ while continue
     HEARDOC
   end
 
-  puts "Game Over \n Do you want to play another round (y/n)".yellow
+  puts "Game Over \n Do you want to play another round (y/n)".yellow.bold
 
   loop do
     begin
@@ -85,5 +91,5 @@ while continue
   end
   end
 end
-
-game.display_statstics
+clear_screen
+puts game.display_statstics.green.bold
