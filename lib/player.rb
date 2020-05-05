@@ -6,7 +6,7 @@ class Player
 
   def initialize(name, symbol)
     Validatable.valid_name?(name)
-    Validatable.valid_symbole?(symbol)
+    Validatable.valid_symbol?(symbol)
     @name = name
     @symbol = symbol
     @wins = 0

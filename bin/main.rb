@@ -12,15 +12,15 @@ HEARDOC
 
 game = TicTacToe.new
 player_name = ''
-player_symbole = ''
+player_symbol = ''
 loop do
   begin
     print 'First player name: '.white
     player_name = gets.chomp
-    print ' Symbole: '.white
-    player_symbole = gets.chomp
+    print ' Symbol: '.white
+    player_symbol = gets.chomp
 
-    game.add_players(player_name, player_symbole)
+    game.add_players(player_name, player_symbol)
     break
   rescue CustomException => e
     puts e.display_error
@@ -30,10 +30,10 @@ loop do
   begin
     print 'Second player name: '
     player_name = gets.chomp
-    print ' Symbole: '
-    player_symbole = gets.chomp
+    print ' Symbol: '
+    player_symbol = gets.chomp
 
-    game.add_players(player_name, player_symbole)
+    game.add_players(player_name, player_symbol)
     break
   rescue CustomException => e
     puts e.display_error

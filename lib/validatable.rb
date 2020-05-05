@@ -6,16 +6,16 @@ module Validatable
     true
   end
 
-  def self.valid_symbole?(symbole)
-    unless symbole.match?(/^[\D]{1}$/)
-      raise CustomException, "Invalid Symbole \n Valid Symbole is single none digit characted\n Try Again"
+  def self.valid_symbol?(symbol)
+    unless symbol.match?(/^[\D]{1}$/)
+      raise CustomException, "Invalid Symbol \n Valid Symbol is single none digit character\n Try Again"
     end
 
     true
   end
 
-  def self.valid_name?(symbole)
-    unless symbole.match?(/^.+$/)
+  def self.valid_name?(symbol)
+    unless symbol.match?(/^.+$/)
       raise CustomException, "Invalid Name \n Valid name is one or more characters \n Try Again"
     end
 

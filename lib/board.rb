@@ -22,21 +22,19 @@ class Board
     HEREDOC
   end
 
-  def mark_tile(index, symbole)
+  def mark_tile(index, symbol)
     @total_moves += 1
     raise CustomException, 'Tile already marked pick another tile and try again' if @tile[index - 1].is_a?(String)
 
-    @tile[index - 1] = symbole
+    @tile[index - 1] = symbol
   end
 
-  def won?(symbole)
+  def won?(symbol)
     return false if @total_moves < 4
 
     won = false
     WINING_COMBINATIONS.each do |combination|
-      unless @tile[combination[0]] == symbole && @tile[combination[1]] == symbole && @tile[combination[2]] == symbole
-        next
-      end
+      next unless @tile[combination[0]] == symbol && @tile[combination[1]] == symbol && @tile[combination[2]] == symbol
 
       won = true
       break
