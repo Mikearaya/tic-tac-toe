@@ -43,6 +43,26 @@ end
 continue = true
 while continue
   game.play
+  until game.ended?
+    game.display_board
+    game.change_turn
+
+    loop do
+      begin
+        choice = gets.chomp
+        game.make_move(choice)
+        break
+      rescue CustomException => e
+        e.display_error
+      end
+    end
+    puts 'get'
+    next unless game.player_won?
+
+    game.display_winner_message
+    break
+  end
+
   puts 'Game Over \n Do you want to play another round (y/n)'
 
   loop do

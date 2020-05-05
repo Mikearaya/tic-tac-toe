@@ -11,36 +11,20 @@ class TicTacToe
     @board = Board.new
     @turn = 1
     @used_symbol = {}
+    @total_move = 0
   end
 
   def play
     @total_match += 1
     @board.reset_board
-    while @board.total_moves < 10
-      @board.draw_board
-      change_turn
-      loop do
-        choice = user_move
-        begin
-          @board.mark_tile(choice, get_player(@turn).symbole)
-          break
-        rescue CustomException => e
-          puts e.display_error
-        end
-      end
-      next unless @board.won?(get_player(@turn).symbole)
+  end
 
-      get_player(@turn).increase_win
-      display_winner_message(@turn)
-      break
-    end
+  def display_board
+    @board.draw_board
   end
 
   def add_players(player_name, symbol)
     raise CustomException, 'Can not add more that 2 players' if @players.size > 1
-
-    puts symbol_available?(symbol)
-    puts @used_symbol[":#{symbol}"]
     raise CustomException, 'Symbol already used try using another symbol' unless symbol_available?(symbol)
 
     @used_symbol[":#{symbol}"] = true
@@ -52,50 +36,36 @@ class TicTacToe
     puts get_player(@turn).name + '\'s Turn'
   end
 
-  private
-
-  def symbol_available?(symbol)
-    false if @used_symbol[":#{symbol}"]
-    true
+  def ended?()
+    @total_move > 9
   end
 
-  def get_player(index)
-    @players[index - 1]
+  def make_move(tile)
+    raise CustomException, 'Invalid Input, Valid Move should be digit between 1-9' unless validate_move(tile)
+
+    tile = tile.to_i
+    @board.mark_tile(tile, get_player(@turn).symbol)
+    @total_move += 1
   end
 
-  def validate_move(choice)
-    choice.match(/^[1-9]{1}$/)
-  end
-
-  def user_move
-    choice = 0
-    loop do
-      begin
-        choice = gets.chomp
-        raise CustomException, 'Invalid Input, Valid Move should be digit between 1-9' unless validate_move(choice.to_s)
-
-        choice = choice.to_i
-        break
-      rescue CustomException => e
-        puts "#{e.display_error}  \n Try Again"
-      rescue StandardError => e
-        puts "#{e.message}  \n Try Again"
-      end
+  def player_won?
+    if @board.won?(get_player(@turn).symbol)
+      get_player(@turn).increase_win
+      return true
     end
-    choice
+    false
   end
 
-  def display_winner_message(winner)
+  def display_winner_message
     puts <<-HEARDOC
-        ************************************************************
-        *                    Congradulation                        *
-                      #{get_player(winner).name}  has won
-        ************************************************************
+
+    ************************************************************
+    *                    Congradulation                        *
+                  #{get_player(@turn).name}  has won
+    ************************************************************
     HEARDOC
     display_statstics
   end
-
-  public
 
   def display_statstics
     puts <<-HEARDOC
@@ -111,5 +81,21 @@ class TicTacToe
 
     ************************************************************
     HEARDOC
+  end
+
+  private
+
+  def symbol_available?(symbol)
+    return false if @used_symbol[":#{symbol}"]
+
+    true
+  end
+
+  def get_player(index)
+    @players[index - 1]
+  end
+
+  def validate_move(choice)
+    choice.match(/^[1-9]{1}$/)
   end
 end
