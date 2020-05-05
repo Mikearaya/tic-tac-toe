@@ -35,7 +35,12 @@ After completing the steps on the Getting stated successfuly run the following c
 if you are done playing the game and want to clean all the artifacts created, run this command on the root directory of the project
 `./reset.sh`
 
-## Contents
+## Troubleshooting
+
+1. `/bin/bash^M: bad interpreter: No such file or directory` when running `./setup.sh`
+   run the following command on the root directory of project
+
+   `sed -i -e 's/\r$//' setup.sh reset.sh`
 
 ## Authors
 
