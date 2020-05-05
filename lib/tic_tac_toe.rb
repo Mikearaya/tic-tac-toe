@@ -10,7 +10,7 @@ class TicTacToe
     @players = []
     @board = Board.new
     @turn = 1
-    @used_symbole = {}
+    @used_symbol = {}
   end
 
   def play
@@ -36,46 +36,27 @@ class TicTacToe
     end
   end
 
-  def add_players
-    print 'First player name: '.blue
-    first_player_name = gets.chomp
-    print ' Symbole: '.blue
-    symbole = read_symbole
-    @players << Player.new(first_player_name, symbole)
-    print 'Second player name: '.blue
-    second_player_name = gets.chomp
-    print ' Symbole: '.blue
-    symbole = read_symbole
-    @players << Player.new(second_player_name, symbole)
-  end
+  def add_players(player_name, symbol)
+    raise CustomException, 'Can not add more that 2 players' if @players.size > 1
 
-  private
+    puts symbol_available?(symbol)
+    puts @used_symbol[":#{symbol}"]
+    raise CustomException, 'Symbol already used try using another symbol' unless symbol_available?(symbol)
 
-  def read_symbole
-    symbole = ''
-    loop do
-      begin
-        symbole = gets.chomp
-
-        Validatable.valid_symbole?(symbole)
-        if @used_symbole[":#{symbole}"]
-          puts 'symbole already used, try different'
-          next
-        end
-        @used_symbole[":#{symbole}"] = true
-        break
-      rescue CustomException => e
-        puts e.display_error
-      rescue StandardError => e
-        puts e.message
-      end
-    end
-    symbole
+    @used_symbol[":#{symbol}"] = true
+    @players << Player.new(player_name, symbol)
   end
 
   def change_turn
     @turn = @turn == 2 ? 1 : 2
     puts get_player(@turn).name + '\'s Turn'
+  end
+
+  private
+
+  def symbol_available?(symbol)
+    false if @used_symbol[":#{symbol}"]
+    true
   end
 
   def get_player(index)

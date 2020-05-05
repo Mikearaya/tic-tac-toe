@@ -11,8 +11,34 @@ puts <<~HEARDOC
 HEARDOC
 
 game = TicTacToe.new
+player_name = ''
+player_symbole = ''
+loop do
+  begin
+    print 'First player name: '.white
+    player_name = gets.chomp
+    print ' Symbole: '.white
+    player_symbole = gets.chomp
 
-game.add_players
+    game.add_players(player_name, player_symbole)
+    break
+  rescue CustomException => e
+    puts e.display_error
+  end
+end
+loop do
+  begin
+    print 'Second player name: '
+    player_name = gets.chomp
+    print ' Symbole: '
+    player_symbole = gets.chomp
+
+    game.add_players(player_name, player_symbole)
+    break
+  rescue CustomException => e
+    puts e.display_error
+  end
+end
 
 continue = true
 while continue
