@@ -1,87 +1,96 @@
-# !/usr/bin/env ruby
-puts 'Welcome To Tic Tac Toe Game'
+#!/usr/bin/env ruby
+require_relative '../lib/tic_tac_toe.rb'
+require_relative '../lib/validatable.rb'
+require 'colorize'
 
-def draw_board(tile)
-  "\n-----------------------------------------\n\n" \
-  "#{tile[0]} | #{tile[1]} | #{tile[2]}\n" \
-  "#{tile[3]} | #{tile[4]} | #{tile[5]}\n" \
-  "#{tile[6]} | #{tile[7]} | #{tile[8]}\n" \
-  "\n-----------------------------------------\n\n"
+def clear_screen
+  Gem.win_platform? ? (system 'cls') : (system 'clear')
 end
+clear_screen
 
-def won?(symbole, tile)
-  winning_combination = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8],
-    [0, 3, 6], [1, 4, 7], [2, 5, 8],
-    [0, 4, 8], [2, 4, 6]
-  ]
-  won = false
-  winning_combination.each do |row|
-    won = true if tile[row[0]] == symbole && tile[row[1]] == symbole && tile[row[2]] == symbole
+puts <<~HEARDOC
+  ***************************************
+  *                                     *
+  *           TIC TAC TOE               *
+  *                                     *
+  ***************************************
+HEARDOC
+
+game = TicTacToe.new
+player_name = ''
+player_symbol = ''
+loop do
+  begin
+    print 'First player name: '.yellow.bold
+    player_name = gets.chomp
+    print ' Symbol: '.yellow.bold
+    player_symbol = gets.chomp
+
+    game.add_players(player_name, player_symbol)
+    break
+  rescue CustomException => e
+    puts e.display_error
   end
-
-  won
 end
+loop do
+  begin
+    print 'Second player name: '.yellow.bold
+    player_name = gets.chomp
+    print ' Symbol: '.yellow.bold
+    player_symbol = gets.chomp
 
-player = {
-  '1': nil,
-  '2': nil
-}
-
-symboleee = {
-  '1': nil,
-  '2': nil
-}
-
-symboleee[':1'] = 'x'
-symboleee[':2'] = 'O'
-puts 'Player 1 Name'
-
-player[':1'] = gets.chomp
-puts 'Player 2 Name'
-player[':2'] = gets.chomp
+    game.add_players(player_name, player_symbol)
+    break
+  rescue CustomException => e
+    puts e.display_error
+  end
+end
 
 continue = true
-turn = 1
-# rubocop: disable Metrics/BlockNesting
 while continue
-  round = 0
-  tile = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  current_symbole = ''
-  while round < 9
-    puts 'Round ' + round.to_s
-    puts draw_board(tile)
-    turn = turn == 1 ? 2 : 1
-    puts player[":#{turn}"] + '\'s Turn'
+  clear_screen
+  game.play
+  until game.ended?
+    puts game.display_board
+    puts game.change_turn.yellow.bold
 
-    choice = false
-    until choice
-      choice = gets.chomp
-      valid = choice.match(/[1-9]/)
-      choice = valid ? choice.to_i : false
-      puts 'invalid input \n valid input is a number between 1 and 9' unless choice
+    loop do
+      begin
+        choice = gets.chomp
+        game.make_move(choice)
+        break
+      rescue CustomException => e
+        puts e.display_error
+      end
     end
-    current_symbole = turn == 1 ? symboleee[':1'] : symboleee[':2']
-    tile[choice - 1] = current_symbole
-    round += 1
+    next unless game.player_won?
 
-    next unless round > 4 && won?(current_symbole, tile)
-
-    winner = player[":#{turn}"]
-    puts '************************************************************'
-    puts '* Congradulation *'
-    puts " #{winner}  has won"
-    puts '************************************************************'
+    puts game.display_board.green
+    puts game.display_winner_message.green.bold
+    puts game.display_statstics.green.bold
     break
-
-    # validate input,
-    # check if move acceptable
-    # check if game is complete
-
   end
-  # rubocop: enable Metrics/BlockNesting
 
-  puts 'Do you want to play another round (y/n)'
-  play = gets.chomp
-  continue = play.downcase != 'n'
+  if game.draw?
+    puts <<-HEARDOC
+    ******************************************************
+    *            IT SEEMS TO BE A DRAW :-)               *
+    ******************************************************
+    HEARDOC
+  end
+
+  puts "Game Over \n Do you want to play another round (y/n)".yellow.bold
+
+  loop do
+    begin
+    play = gets.chomp
+    Validatable.exit_choice_valid?(play)
+    continue = play.downcase != 'n'
+    break
+    rescue CustomException => e
+      puts e.display_error
+  end
+  end
 end
+clear_screen
+puts game.display_statstics.green.bold
