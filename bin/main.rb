@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
+require 'colorize'
 require_relative '../lib/tic_tac_toe.rb'
 require_relative '../lib/validatable.rb'
-require 'colorize'
+
 
 def clear_screen
   Gem.win_platform? ? (system 'cls') : (system 'clear')
