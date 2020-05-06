@@ -54,12 +54,6 @@ if you are done playing the game and want to clean all the artifacts created, ru
 - Twitter: [@mikearaya12](https://twitter.com/mikearaya12)
 - Linkedin: [linkedin](https://linkedin.com/in/mikael-araya)
 
-👤 **Taofeek Olalere**
-
-- Github: [@teekaytech](https://github.com/teekaytech)
-- Twitter: [@olalere](https://twitter.com/ola_lere)
-- Linkedin: [linkedin](https://linkedin.com/in/teekaytech)
-
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
