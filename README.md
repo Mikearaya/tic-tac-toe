@@ -2,6 +2,8 @@
 
 Command line based Tic Tac Toe game build with Ruby
 
+![cover](./assets/cover.png)
+
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
@@ -19,14 +21,16 @@ Since all the code is written using ruby `Ruby Runtime >= 1.9` ruby is required 
 
 ### Usage
 
-After completing the steps on the Getting stated successfuly run the following command to start the game
-
-`tic-tac-toe`
+- After completing the steps on the Getting stated successfuly run the following command to start the game
+  `tic-tac-toe`
+- Next you will be promted to enter each players name and to select symbol each player want to use for marking tiles.
+  (Note: player name can be any 1 or more characters while symbol can only be single none digit character)
+- Now you are ready to play the game :-)
 
 ### Game Rules
 
 1. The game is played on a grid that's 3 \* 3 square of tiles
-2. Each player registers into the game by providing his/her name and their prefered symbole for use to mark the tiles
+2. Each player registers into the game by providing his/her name and their prefered symbol for use to mark the tiles
 3. First player to get 3 of his/her marks in a row (horizontally, Vertically or diagonally) is the winner
 4. When all 9 tiles are full but if no player has 3 marks in a row, the game ends in a tie
 
