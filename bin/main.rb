@@ -67,6 +67,7 @@ while continue
 
     puts game.display_board.green
     puts game.display_winner_message.green.bold
+    puts game.display_statstics.green.bold
     break
   end
 

@@ -61,14 +61,13 @@ class TicTacToe
   end
 
   def display_winner_message
-    puts <<-HEARDOC
+    <<-HEARDOC
 
     ************************************************************
     *                    Congratulations                        *
                       #{get_player(@turn).name}  has won
 
     HEARDOC
-    display_statstics
   end
 
   def display_statstics
