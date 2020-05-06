@@ -1,4 +1,4 @@
-# Tic Tac Toe
+# Tic Tac Toe [![Run on Repl.it](https://repl.it/badge/github/Mikearaya/tic-tac-toe)](https://repl.it/github/Mikearaya/tic-tac-toe)
 
 Command line based Tic Tac Toe game build with Ruby
 
