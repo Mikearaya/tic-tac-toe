@@ -3,3 +3,4 @@ test.rb
 .vscode
 package-lock.json
 node_modules/
+bin/tic-tac-toe
