@@ -39,13 +39,14 @@ describe Board do
       expect(subject.won?('X')).to eq false
     end
 
-    it 'return true for [0, 1, 2]' do
-      subject.mark_tile(3, 'O')
-      subject.mark_tile(5, 'O')
-      subject.mark_tile(0, 'X')
+    it 'return true for [1, 2, 3]' do
+      subject.mark_tile(4, 'O')
+      subject.mark_tile(8, 'O')
       subject.mark_tile(1, 'X')
       subject.mark_tile(2, 'X')
-      expect(subject.won?('X')).to eq false
+      subject.mark_tile(3, 'X')
+      expect(subject.won?('X')).to eq true
+      expect(subject.won?('O')).not_to eq true
     end
   end
 end
