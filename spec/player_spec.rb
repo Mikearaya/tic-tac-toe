@@ -33,7 +33,7 @@ describe Player do
     end
   end
 
-  context 'Update player win' do
+  context '#increase_win' do
     let(:name) { 'Mikael' }
     let(:symbol) { 'X' }
     it 'should increase from 0 to 1' do

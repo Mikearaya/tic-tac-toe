@@ -7,7 +7,7 @@ describe TicTacToe do
     it { is_expected.to have_attributes(total_match: 0) }
   end
 
-  context 'Play should' do
+  context '#Play should' do
     it 'increase total match by 1' do
       expect { subject.play }.to change { subject.total_match }.from(0).to(1)
     end
@@ -17,7 +17,7 @@ describe TicTacToe do
     end
   end
 
-  context 'add_player should' do
+  context '#add_player should' do
     it 'add player successfuly' do
       expect(subject.add_players('Mikael', 'X')).to eq true
     end
@@ -33,7 +33,7 @@ describe TicTacToe do
     end
   end
 
-  context 'change_turn should' do
+  context '#change_turn should' do
     it 'return current player' do
       subject.add_players('Mikael', 'X')
       subject.add_players('Araya', 'O')
@@ -48,7 +48,7 @@ describe TicTacToe do
     end
   end
 
-  context 'make_move should' do
+  context '#make_move should' do
     it 'complete successfuly' do
       subject.add_players('Mikael', 'X')
       subject.add_players('Araya', 'O')
@@ -62,7 +62,7 @@ describe TicTacToe do
     end
   end
 
-  context 'ended? should' do
+  context '#ended? should' do
     it 'return true after 9 moves' do
       subject.add_players('Mikael', 'X')
       subject.add_players('Araya', 'O')
@@ -84,7 +84,7 @@ describe TicTacToe do
     end
   end
 
-  context 'player won? should' do
+  context '#player_won? should' do
     it 'return false initially' do
       subject.add_players('Mikael', 'X')
       subject.add_players('Araya', 'O')
@@ -104,7 +104,7 @@ describe TicTacToe do
     end
   end
 
-  context 'display_winner_message should' do
+  context '#display_winner_message should' do
     it 'return string' do
       subject.add_players('Mikael', 'X')
       subject.add_players('Araya', 'O')
@@ -112,7 +112,7 @@ describe TicTacToe do
     end
   end
 
-  context 'display_statstics should' do
+  context '#display_statstics should' do
     it 'returns String' do
       subject.add_players('Mikael', 'X')
       subject.add_players('Araya', 'O')
