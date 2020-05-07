@@ -18,7 +18,7 @@
     "**/**/*.rb": [
       "rubocop"
     ],
-    "spec/**/*.rb": [
+    "./spec/*.rb": [
       "rspec"
     ]
   },
