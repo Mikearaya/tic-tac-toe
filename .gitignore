@@ -4,3 +4,4 @@ test.rb
 package-lock.json
 node_modules/
 bin/tic-tac-toe
+spec/
