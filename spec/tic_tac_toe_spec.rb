@@ -113,7 +113,7 @@ describe TicTacToe do
   end
 
   context 'display_statstics should' do
-    it 'return string' do
+    it 'returns String' do
       subject.add_players('Mikael', 'X')
       subject.add_players('Araya', 'O')
       expect(subject.display_statstics).to be_instance_of(String)

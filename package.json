@@ -19,7 +19,7 @@
       "rubocop"
     ],
     "spec/**/*.rb": [
-      "rubocop"
+      "rspec"
     ]
   },
   "repository": {

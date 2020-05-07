@@ -39,6 +39,12 @@ Since all the code is written using ruby `Ruby Runtime >= 1.9` ruby is required 
 if you are done playing the game and want to clean all the artifacts created, run this command on the root directory of the project
 `./reset.sh`
 
+### Testing
+
+For testing RSpec is used. To run test run the following command line.
+
+`rspec`
+
 ## Troubleshooting
 
 1. `/bin/bash^M: bad interpreter: No such file or directory` when running `./setup.sh`
