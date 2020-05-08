@@ -11,9 +11,9 @@ To get a local copy up and running follow these simple example steps.
 - Clone or download this repository to your local workstation.
 - enter the directory of the cloned project and change `setup.sh` to be executable by running the following command on linux based OS
   or the equivalent command in other OS
-  `chmod 755 create.sh`
+  `chmod 755 setup.sh`
 - Next run the following code to create the project artifact
-  `./create.sh`
+  `./setup.sh`
 
 ### Prerequisites
 
