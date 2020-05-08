@@ -7,7 +7,7 @@ describe Player do
     it { is_expected.to have_attributes(name: 'Mikael', symbol: 'X', wins: 0) }
   end
 
-  context 'shod Raise exception for name' do
+  context 'shold Raise exception for name' do
     let(:name) { '' }
     let(:symbol) { 'X' }
     name_error_message = /invalid name/i
