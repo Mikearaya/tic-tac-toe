@@ -44,7 +44,6 @@ describe TicTacToe do
       subject.add_players('Mikael', 'X')
       subject.add_players('Araya', 'O')
       expect(subject.change_turn).to start_with('Araya')
-      expect(subject.change_turn).to start_with('Mikael')
     end
   end
 

@@ -12,7 +12,6 @@ describe Board do
     end
     it 'Increase total move by 1' do
       expect { subject.mark_tile(1, 'X') }.to change { subject.total_moves }.from(0).to(1)
-      expect { subject.mark_tile(2, 'X') }.to change { subject.total_moves }.from(1).to(2)
     end
   end
 
@@ -46,7 +45,6 @@ describe Board do
       subject.mark_tile(2, 'X')
       subject.mark_tile(3, 'X')
       expect(subject.won?('X')).to eq true
-      expect(subject.won?('O')).not_to eq true
     end
   end
 end
