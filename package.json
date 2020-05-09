@@ -17,6 +17,9 @@
   "lint-staged": {
     "**/**/*.rb": [
       "rubocop"
+    ],
+    "./spec/*.rb": [
+      "rspec"
     ]
   },
   "repository": {
