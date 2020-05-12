@@ -25,7 +25,7 @@ Since all the code is written using ruby `Ruby Runtime >= 1.9` ruby is required 
   `tic-tac-toe`
 - Next you will be promted to enter each players name and to select symbol each player want to use for marking tiles.
   (Note: player name can be any 1 or more characters while symbol can only be single none digit character)
-- Now you are ready to play the game :-)
+- Now you are ready to play the game
 
 ### Game Rules
 
@@ -52,7 +52,7 @@ For testing RSpec is used. To run test run the following command line.
 
    `sed -i -e 's/\r$//' setup.sh reset.sh`
 
-## Authors
+## Author
 
 👤 **Mikael Araya**
 
